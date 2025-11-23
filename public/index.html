@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time-Telling Exercises for Kids</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .instructions {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 5px;
+        }
+
+        .instructions h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .instructions p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .exercise-card {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .exercise-number {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .clock-image {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto 15px;
+            border-radius: 8px;
+            background: white;
+            padding: 10px;
+        }
+
+        .input-area {
+            margin-top: 15px;
+        }
+
+        .input-area label {
+            display: block;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-area input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .input-area input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .answer-key-section {
+            background: #f0f4ff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        .answer-key-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .answer-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .answer-item strong {
+            color: #667eea;
+        }
+
+        .answer-item span {
+            color: #333;
+            margin-left: 10px;
+        }
+
+        .toggle-answers-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-answers-btn:hover {
+            background: #764ba2;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            color: #999;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .exercises-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⏰ Time-Telling Exercises</h1>
+        <p class="subtitle">Learn to read analog clocks with 20 fun exercises!</p>
+
+        <div class="instructions">
+            <h2>📝 Instructions</h2>
+            <p>Look at each analog clock face and write the time shown. You can write the time in the format HH:MM (for example, 3:15 or 10:45). After completing all exercises, click the button below to check your answers!</p>
+        </div>
+
+        <div class="exercises-grid" id="exercisesContainer"></div>
+
+        <button class="toggle-answers-btn" onclick="toggleAnswers()">Show Answer Key</button>
+
+        <div class="answer-key-section hidden" id="answerKeySection">
+            <h2>✅ Answer Key</h2>
+            <div class="answer-grid" id="answerKeyContainer"></div>
+        </div>
+
+        <footer>
+            <p>Created for children learning to tell time. Practice regularly to improve your skills!</p>
+        </footer>
+    </div>
+
+    <script>
+        const exercises = [
+            { number: 1, image: 'images/clocks/clock_1.png', answer: '1:00' },
+            { number: 2, image: 'images/clocks/clock_2.png', answer: '2:10' },
+            { number: 3, image: 'images/clocks/clock_3.png', answer: '3:15' },
+            { number: 4, image: 'images/clocks/clock_4.png', answer: '4:20' },
+            { number: 5, image: 'images/clocks/clock_5.png', answer: '5:25' },
+            { number: 6, image: 'images/clocks/clock_6.png', answer: '6:30' },
+            { number: 7, image: 'images/clocks/clock_7.png', answer: '7:35' },
+            { number: 8, image: 'images/clocks/clock_8.png', answer: '8:40' },
+            { number: 9, image: 'images/clocks/clock_9.png', answer: '9:45' },
+            { number: 10, image: 'images/clocks/clock_10.png', answer: '10:50' },
+            { number: 11, image: 'images/clocks/clock_11.png', answer: '11:55' },
+            { number: 12, image: 'images/clocks/clock_12.png', answer: '12:05' },
+            { number: 13, image: 'images/clocks/clock_13.png', answer: '1:10' },
+            { number: 14, image: 'images/clocks/clock_14.png', answer: '2:15' },
+            { number: 15, image: 'images/clocks/clock_15.png', answer: '3:20' },
+            { number: 16, image: 'images/clocks/clock_16.png', answer: '4:25' },
+            { number: 17, image: 'images/clocks/clock_17.png', answer: '5:30' },
+            { number: 18, image: 'images/clocks/clock_18.png', answer: '6:35' },
+            { number: 19, image: 'images/clocks/clock_19.png', answer: '7:40' },
+            { number: 20, image: 'images/clocks/clock_20.png', answer: '8:45' }
+        ];
+
+        function renderExercises() {
+            const container = document.getElementById('exercisesContainer');
+            exercises.forEach(exercise => {
+                const card = document.createElement('div');
+                card.className = 'exercise-card';
+                card.innerHTML = `
+                    <div class="exercise-number">Exercise ${exercise.number}</div>
+                    <img src="${exercise.image}" alt="Clock ${exercise.number}" class="clock-image">
+                    <div class="input-area">
+                        <label for="answer-${exercise.number}">What time is it?</label>
+                        <input type="text" id="answer-${exercise.number}" placeholder="e.g., 3:15">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAnswerKey() {
+            const container = document.getElementById('answerKeyContainer');
+            exercises.forEach(exercise => {
+                const item = document.createElement('div');
+                item.className = 'answer-item';
+                item.innerHTML = `<strong>Exercise ${exercise.number}:</strong><span>${exercise.answer}</span>`;
+                container.appendChild(item);
+            });
+        }
+
+        function toggleAnswers() {
+            const section = document.getElementById('answerKeySection');
+            const btn = event.target;
+            section.classList.toggle('hidden');
+            btn.textContent = section.classList.contains('hidden') ? 'Show Answer Key' : 'Hide Answer Key';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderExercises();
+            renderAnswerKey();
+        });
+    </script>
+</body>
+</html>
