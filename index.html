@@ -116,11 +116,44 @@
             border-radius: 5px;
             font-size: 1em;
             transition: border-color 0.3s;
+            margin-bottom: 10px;
         }
 
         .input-area input:focus {
             outline: none;
             border-color: #667eea;
+        }
+
+        .show-answer-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .show-answer-btn:hover {
+            background: #764ba2;
+        }
+
+        .answer-display {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            border-radius: 5px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .answer-display.show {
+            display: block;
         }
 
         .answer-key-section {
@@ -158,23 +191,6 @@
             margin-left: 10px;
         }
 
-        .toggle-answers-btn {
-            display: block;
-            margin: 30px auto;
-            padding: 12px 30px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .toggle-answers-btn:hover {
-            background: #764ba2;
-        }
-
         .hidden {
             display: none;
         }
@@ -209,15 +225,13 @@
 
         <div class="instructions">
             <h2>📝 Instructions</h2>
-            <p>Look at each analog clock face and write the time shown. You can write the time in the format HH:MM (for example, 3:15 or 10:45). After completing all exercises, click the button below to check your answers!</p>
+            <p>Look at each analog clock face and write the time shown. You can write the time in the format HH:MM (for example, 3:15 or 10:45). Click the "Show Answer" button below each clock to check your answer!</p>
         </div>
 
         <div class="exercises-grid" id="exercisesContainer"></div>
 
-        <button class="toggle-answers-btn" onclick="toggleAnswers()">Show Answer Key</button>
-
-        <div class="answer-key-section hidden" id="answerKeySection">
-            <h2>✅ Answer Key</h2>
+        <div class="answer-key-section">
+            <h2>✅ Answer Key (All Answers)</h2>
             <div class="answer-grid" id="answerKeyContainer"></div>
         </div>
 
@@ -228,26 +242,26 @@
 
     <script>
         const exercises = [
-            { number: 1, image: 'images/clocks/clock_1.png', answer: '1:00' },
-            { number: 2, image: 'images/clocks/clock_2.png', answer: '2:10' },
-            { number: 3, image: 'images/clocks/clock_3.png', answer: '3:15' },
-            { number: 4, image: 'images/clocks/clock_4.png', answer: '4:20' },
-            { number: 5, image: 'images/clocks/clock_5.png', answer: '5:25' },
-            { number: 6, image: 'images/clocks/clock_6.png', answer: '6:30' },
-            { number: 7, image: 'images/clocks/clock_7.png', answer: '7:35' },
-            { number: 8, image: 'images/clocks/clock_8.png', answer: '8:40' },
-            { number: 9, image: 'images/clocks/clock_9.png', answer: '9:45' },
-            { number: 10, image: 'images/clocks/clock_10.png', answer: '10:50' },
-            { number: 11, image: 'images/clocks/clock_11.png', answer: '11:55' },
-            { number: 12, image: 'images/clocks/clock_12.png', answer: '12:05' },
-            { number: 13, image: 'images/clocks/clock_13.png', answer: '1:10' },
-            { number: 14, image: 'images/clocks/clock_14.png', answer: '2:15' },
-            { number: 15, image: 'images/clocks/clock_15.png', answer: '3:20' },
-            { number: 16, image: 'images/clocks/clock_16.png', answer: '4:25' },
-            { number: 17, image: 'images/clocks/clock_17.png', answer: '5:30' },
-            { number: 18, image: 'images/clocks/clock_18.png', answer: '6:35' },
-            { number: 19, image: 'images/clocks/clock_19.png', answer: '7:40' },
-            { number: 20, image: 'images/clocks/clock_20.png', answer: '8:45' }
+            { number: 1, image: 'images/clocks/clock_1.png', answer: '12:00' },
+            { number: 2, image: 'images/clocks/clock_2.png', answer: '1:00' },
+            { number: 3, image: 'images/clocks/clock_3.png', answer: '2:00' },
+            { number: 4, image: 'images/clocks/clock_4.png', answer: '3:00' },
+            { number: 5, image: 'images/clocks/clock_5.png', answer: '4:00' },
+            { number: 6, image: 'images/clocks/clock_6.png', answer: '5:00' },
+            { number: 7, image: 'images/clocks/clock_7.png', answer: '6:00' },
+            { number: 8, image: 'images/clocks/clock_8.png', answer: '7:00' },
+            { number: 9, image: 'images/clocks/clock_9.png', answer: '8:00' },
+            { number: 10, image: 'images/clocks/clock_10.png', answer: '9:00' },
+            { number: 11, image: 'images/clocks/clock_11.png', answer: '10:00' },
+            { number: 12, image: 'images/clocks/clock_12.png', answer: '11:00' },
+            { number: 13, image: 'images/clocks/clock_13.png', answer: '6:00' },
+            { number: 14, image: 'images/clocks/clock_14.png', answer: '3:00' },
+            { number: 15, image: 'images/clocks/clock_15.png', answer: '9:00' },
+            { number: 16, image: 'images/clocks/clock_16.png', answer: '10:00' },
+            { number: 17, image: 'images/clocks/clock_17.png', answer: '10:00' },
+            { number: 18, image: 'images/clocks/clock_18.png', answer: '12:00' },
+            { number: 19, image: 'images/clocks/clock_19.png', answer: '3:00' },
+            { number: 20, image: 'images/clocks/clock_20.png', answer: '2:00' }
         ];
 
         function renderExercises() {
@@ -255,12 +269,15 @@
             exercises.forEach(exercise => {
                 const card = document.createElement('div');
                 card.className = 'exercise-card';
+                const answerId = `answer-display-${exercise.number}`;
                 card.innerHTML = `
                     <div class="exercise-number">Exercise ${exercise.number}</div>
                     <img src="${exercise.image}" alt="Clock ${exercise.number}" class="clock-image">
                     <div class="input-area">
-                        <label for="answer-${exercise.number}">What time is it?</label>
-                        <input type="text" id="answer-${exercise.number}" placeholder="e.g., 3:15">
+                        <label for="input-${exercise.number}">What time is it?</label>
+                        <input type="text" id="input-${exercise.number}" placeholder="e.g., 3:15">
+                        <button class="show-answer-btn" onclick="toggleAnswer('${answerId}')">Show Answer</button>
+                        <div class="answer-display" id="${answerId}">Answer: ${exercise.answer}</div>
                     </div>
                 `;
                 container.appendChild(card);
@@ -277,11 +294,9 @@
             });
         }
 
-        function toggleAnswers() {
-            const section = document.getElementById('answerKeySection');
-            const btn = event.target;
-            section.classList.toggle('hidden');
-            btn.textContent = section.classList.contains('hidden') ? 'Show Answer Key' : 'Hide Answer Key';
+        function toggleAnswer(answerId) {
+            const answerDisplay = document.getElementById(answerId);
+            answerDisplay.classList.toggle('show');
         }
 
         // Initialize on page load
